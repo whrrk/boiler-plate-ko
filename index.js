@@ -22,17 +22,20 @@ mongoose.connect(config.mongoURI
 
 app.get('/', (req, res) => res.send('Hello World!~~안녕'));
 
+
+//회원가입을 이용한 라우트
 app.post('/register', (req, res) => {
 
     const user = new User(req.body);
 
+    //몽고디비에서 사용할 수 있는거 mongodb에 user가 저장돰
     user.save((err, userInfo) => {
         if (err) return res, json({ success: false, err })
         return res.status(200).json({
             success: true
         })
-    }); //몽고디비에서 사용할 수 있는거 mongodb에 user가 저장돰
-}); //회원가입을 이용한 라우트
+    });
+});
 
 
 
