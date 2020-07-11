@@ -4,7 +4,7 @@ const port = 5000;
 const bodyParser = require('body-parser');
 const { User } = require('./models/Users');
 const mongoose = require('mongoose');
-
+//1
 const config = require('./config/key');
 
 app.use(bodyParser.urlencoded({ extended: true }));
