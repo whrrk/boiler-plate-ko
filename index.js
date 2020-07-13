@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { User } = require('./models/Users');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const { auth } = require('./middleware/auth');
 //1
 const config = require('./config/key');
 
@@ -27,7 +28,7 @@ app.get('/', (req, res) => res.send('Hello World!~~안녕'));
 
 
 //회원가입을 이용한 라우트
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
 
     const user = new User(req.body);
 
@@ -42,7 +43,7 @@ app.post('/register', (req, res) => {
 
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
 
     //email search -> email and 비밀번호가 맞는지.
     //그 후 토큰 생성
@@ -76,12 +77,17 @@ app.post('/login', (req, res) => {
     })
 })
 
-
-
-
-
-
-
-
+app.get('/api/users/auth', auth, (req, res) => {
+    res.status(200).json({
+        _id: req.user._id,
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        lastname: req.user.lastname,
+        role: req.user.role,
+        image: req.user.image
+    })
+})
 
 app.listen(port, () => console.log('Example app listening on port' + port + '!'));
