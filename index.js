@@ -77,6 +77,7 @@ app.post('/api/users/login', (req, res) => {
     })
 })
 
+//로그인 되어있는지, 권한을 어떻게 가지고 있는지
 app.get('/api/users/auth', auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
@@ -87,6 +88,15 @@ app.get('/api/users/auth', auth, (req, res) => {
         lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image
+    })
+})
+
+app.get('/api/users/logout', auth, (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).send({
+            success: true
+        })
     })
 })
 
