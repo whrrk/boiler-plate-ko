@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux'; //dispatch를 이용해서 action , action 다음에 reducer
 import { registerUser } from '../../../_actions/user_action';
-
+import { withRouter } from 'react-router-dom';
 
 const RegisterPage = (props) => {
 
@@ -75,4 +75,4 @@ const RegisterPage = (props) => {
     );
 }
 
-export default RegisterPage;
+export default withRouter(RegisterPage);
